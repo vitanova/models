@@ -396,8 +396,8 @@ def VFI_grid(v, grid=small_grid):
         else:
             for iz in range(N_z):
                 for ik in range(grid):
-                    ikprime1 = L_dis1[iz, ik, int(ikprime1)]
-                    l = ((1-alpha)*np.exp(ZZ[iz])*A*Ktemp[ik]**(alpha)*1/phi_1)**(1/(alpha+phi_2))
+                    ikprime1 = ikprime_old[iz, ik]
+                    l = L_dis1[iz, ik, int(ikprime1)]
                     c = A*np.exp(ZZ[iz])*Ktemp[ik]**alpha*l**(1-alpha)+(1-delta)*Ktemp[ik]-Ktemp[int(ikprime1)]
                     v_z_kprime = 0
                     for izprime in range(N_z):
@@ -451,10 +451,10 @@ if choice ==4:
                     pot_root = 1
                 LL1[iz, ik, ikprime] = pot_root
     # modify the matrix
-    L_dis1 = np.empty((N_z, grid, grid))
+    L_dis1 = np.empty((N_z, small_grid, small_grid))
     for iz in range(N_z):
-        for ik in range(grid):
-            for ikprime in range(grid):
+        for ik in range(small_grid):
+            for ikprime in range(small_grid):
                 temp = LL1[iz, ik, ikprime]
                 if temp<1:
                     L_dis1[iz, ik, ikprime]=temp
